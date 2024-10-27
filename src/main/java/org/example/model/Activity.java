@@ -1,5 +1,11 @@
 package org.example.model;
 
+
+/**
+ * Рекорд описывает активности за промежуток времени (обычно одна тема).
+ * @param themeName название темы
+ * @param maxPoints максимальные баллы, которые можно получить за активность
+ */
 public record Activity(String themeName, int maxPoints) implements Task {
 
     public float engagement(int peoplesCount) {

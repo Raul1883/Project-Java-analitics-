@@ -3,12 +3,15 @@ package org.example.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Класс, описывающий сущность студента, прошедшего курс
+ */
 public class Student {
     private final String name;
     private final float averageQuality;
     private final ArrayList<StudentTheme> themes;
 
-
+    // изменение величин с течением времени
     private final ArrayList<Float> qualityDynamics = new ArrayList<>();
     private final ArrayList<Float> activitiesDynamics = new ArrayList<>();
     private final ArrayList<Float> exercisesDynamics = new ArrayList<>();
@@ -16,6 +19,11 @@ public class Student {
 
     private ArrayList<Float> relativeActivitiesDynamics;
 
+    /**
+     *
+     * @param name ФИО студента
+     * @param themes пройденные темы
+     */
     public Student(String name, ArrayList<StudentTheme> themes) {
         this.name = name;
         this.themes = themes;
