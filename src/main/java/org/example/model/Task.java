@@ -1,5 +1,9 @@
 package org.example.model;
 
+
+/**
+ * Контракт для всех мероприятий, за которые можно получить баллы
+ */
 public interface Task {
 
     String themeName();
