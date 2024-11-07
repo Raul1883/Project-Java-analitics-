@@ -7,16 +7,21 @@ package org.example.model;
 public class Exercise implements Task {
     private final String name;
     private final int _maxPoints;
-    private final float _quality;
-    private final int countOfStarted;
+    private float _quality;
+    private int countOfStarted;
+
+    public Exercise(String themeName, int maxPoints) {
+        _maxPoints = maxPoints;
+        name = themeName;
+    }
 
     /**
-     *
-     * @param themeName название упражнения
-     * @param maxPoints максимальные баллы, за упражнение
-     * @param countOfStarted количество людей, приступивших к упражнению
+     * @param themeName       название упражнения
+     * @param maxPoints       максимальные баллы, за упражнение
+     * @param countOfStarted  количество людей, приступивших к упражнению
      * @param countOfFinished количество людей, сдавших упражнение
      */
+
     public Exercise(String themeName, int maxPoints, int countOfStarted, int countOfFinished) {
         _maxPoints = maxPoints;
         this.countOfStarted = countOfStarted;
@@ -30,7 +35,7 @@ public class Exercise implements Task {
     }
 
 
-    public int maxPoints() {
+    public int points() {
         return _maxPoints;
     }
 

@@ -8,9 +8,9 @@ public interface Task {
 
     String themeName();
     /**
-     * @return Максимальная оценка за задачу
+     * @return Оценка за задачу
      **/
-    int maxPoints();
+    int points();
 
     /**
      * Качество прохождения задачи. Отношение решивших задачу к приступившим.

@@ -7,6 +7,10 @@ package org.example.model;
  */
 public class Practise extends Exercise {
 
+    public Practise(String themeName, int maxPoints) {
+        super(themeName, maxPoints);
+    }
+
     public Practise(String themeName, int maxPoints, int countOfStarted, int countOfFinished) {
         super(themeName, maxPoints, countOfStarted, countOfFinished);
     }
@@ -15,7 +19,7 @@ public class Practise extends Exercise {
     public String toString() {
         return "Practise{" +
                 "name='" + super.getName() + '\'' +
-                ", _maxPoints=" + super.maxPoints() +
+                ", _maxPoints=" + super.points() +
                 ", _quality=" + super.quality() +
                 '}';
     }
