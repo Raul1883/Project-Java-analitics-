@@ -13,8 +13,7 @@ public class Theme {
     private final float quality;
 
     /**
-     *
-     * @param name название темы
+     * @param name  название темы
      * @param tasks совокупность заданий, которые необходимо выполнить в этой теме
      */
     public Theme(String name, ArrayList<Task> tasks) {
@@ -23,12 +22,12 @@ public class Theme {
         int counter = 0;
 
         for (Task t : tasks) {
-            if (t instanceof Activity)
-                maxActivity += t.maxPoints();
-            if (t instanceof Exercise)
-                maxExercise += t.maxPoints();
-            if (t instanceof Practise)
-                maxPractise += t.maxPoints();
+            if (t.getClass() == Activity.class)
+                maxActivity += t.points();
+            else if (t.getClass() == Practise.class)
+                maxPractise += t.points();
+            else if (t.getClass() == Exercise.class)
+                maxExercise += t.points();
 
 
             if (t.quality() != -1) {
@@ -58,5 +57,16 @@ public class Theme {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Theme{" +
+                "name='" + name + '\'' +
+                ", maxPractise=" + maxPractise +
+                ", maxExercise=" + maxExercise +
+                ", maxActivity=" + maxActivity +
+                ", quality=" + quality +
+                '}';
     }
 }
