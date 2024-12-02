@@ -12,6 +12,9 @@ import java.util.Objects;
 
 public class Parser {
 
+    public static ArrayList<Task> tasks = new ArrayList<>();
+
+
     public static ArrayList<Theme> readThemes(String path) {
         try (CSVReader reader = new CSVReader(new FileReader(path, StandardCharsets.UTF_8), ';')) {
             ArrayList<Theme> themes = new ArrayList<>();
@@ -99,19 +102,43 @@ public class Parser {
     }
 
     private static Task getTask(String themeName, String heading, String points) {
-        if (heading.matches("Упр:.*")) {
-            return new Exercise(themeName, Integer.parseInt(points));
-        }
-
-        if (heading.matches("ДЗ:.*")) {
-            return new Practise(themeName, Integer.parseInt(points));
-        }
 
         if (heading.matches("Акт.*")) {
-            return new Activity(themeName, Integer.parseInt(points));
+            Activity activity = new Activity(themeName, Integer.parseInt(points));
+            tasks.add(activity);
+            return activity;
         }
 
-        return null;
+        if (!heading.matches(".*: .*")) {
+            return null;
+        }
+
+        String[] splitHeading = heading.split(": ");
+        String taskType = splitHeading[0];
+        String taskName = splitHeading[1];
+
+        SlideData slideData = ULearn.getSlideData(splitHeading[1]);
+
+
+        switch (taskType) {
+            case "Упр":
+                Exercise exercise = Objects.isNull(slideData) ?
+                        new Exercise(taskName, Integer.parseInt(points)) :
+                        new Exercise(taskName, Integer.parseInt(points),
+                                slideData.countOfStarted(), slideData.countOfFinished());
+                tasks.add(exercise);
+                return exercise;
+            case "ДЗ":
+                Practise practise = Objects.isNull(slideData) ?
+                        new Practise(taskName, Integer.parseInt(points)) :
+                        new Practise(taskName, Integer.parseInt(points),
+                                slideData.countOfStarted(), slideData.countOfFinished());
+                tasks.add(practise);
+                return practise;
+            default:
+                return null;
+        }
+
     }
 
     // Стартовый индекс задан 2, так как специфика документов.

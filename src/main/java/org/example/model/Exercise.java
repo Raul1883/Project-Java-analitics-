@@ -8,9 +8,14 @@ public class Exercise implements Task {
     private final String name;
     private final int _maxPoints;
     private float _quality;
-    private int countOfStarted;
+
+    private final int countOfStarted;
+    private final int countOfFinished;
 
     public Exercise(String themeName, int maxPoints) {
+        countOfStarted = 0;
+        countOfFinished = 0;
+
         _maxPoints = maxPoints;
         name = themeName;
     }
@@ -25,13 +30,15 @@ public class Exercise implements Task {
     public Exercise(String themeName, int maxPoints, int countOfStarted, int countOfFinished) {
         _maxPoints = maxPoints;
         this.countOfStarted = countOfStarted;
-        _quality = (float) countOfStarted / countOfFinished;
+        this.countOfFinished = countOfFinished;
+        _quality = (float) countOfFinished / countOfStarted;
+
         name = themeName;
     }
 
 
     public String themeName() {
-        return "";
+        return name;
     }
 
 
@@ -49,16 +56,14 @@ public class Exercise implements Task {
         return (float) countOfStarted / peoplesCount;
     }
 
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {
-        return "Exercise{" +
-                "name='" + name + '\'' +
+        return "name='" + name + '\'' +
                 ", _maxPoints=" + _maxPoints +
                 ", _quality=" + _quality +
+                ", start=" + countOfStarted +
+                ", end=" + countOfFinished +
                 '}';
     }
 }
