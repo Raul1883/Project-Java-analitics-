@@ -8,12 +8,14 @@ public class Exercise implements Task {
     private final String name;
     private final int _maxPoints;
     private float _quality;
+
     private final int countOfStarted;
     private final int countOfFinished;
 
     public Exercise(String themeName, int maxPoints) {
         countOfStarted = 0;
         countOfFinished = 0;
+
         _maxPoints = maxPoints;
         name = themeName;
     }

@@ -9,9 +9,11 @@ public class Practise extends Exercise {
 
     public Practise(String themeName, int maxPoints) {
         super(themeName, maxPoints);
+
     }
 
     public Practise(String themeName, int maxPoints, int countOfStarted, int countOfFinished) {
         super(themeName, maxPoints, countOfStarted, countOfFinished);
+
     }
 }
