@@ -8,10 +8,6 @@ package org.example.model;
  */
 public record Activity(String themeName, int points) implements Task {
 
-    public float engagement(int peoplesCount) {
-        return -1;
-    }
-
     public float quality() {
         return -1;
     }

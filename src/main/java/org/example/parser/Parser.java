@@ -55,8 +55,21 @@ public class Parser {
             String[] fullPoints = reader.readNext();
 
             ArrayList<int[]> themesRanges = getThemesIndex(themeNames);
+            ArrayList<Theme> themes = new ArrayList<>();
+            for (int[] indexPair : themesRanges) {
+                ArrayList<Task> themeTasks = new ArrayList<>();
+                String themeName = themeNames[indexPair[0]];
+                for (int i = indexPair[0]; i < indexPair[1]; i++) {
+                    Task themeTask = getTask(themeName, headings[i], fullPoints[i]);
+
+                    if (!Objects.isNull(themeTask))
+                        themeTasks.add(themeTask);
+                }
+                themes.add(new Theme(themeName, themeTasks));
+            }
+
             while ((nextLine = reader.readNext()) != null) {
-                students.add(createStudent(nextLine, themeNames, headings, fullPoints, themesRanges));
+                students.add(createStudent(themes, nextLine, themeNames, headings, themesRanges));
             }
 
             return students;
@@ -65,37 +78,39 @@ public class Parser {
         }
     }
 
-    private static Student createStudent(String[] line, String[] themeNames,
-                                         String[] headings, String[] fullPoints,
+    private static Student createStudent(ArrayList<Theme> themes, String[] line, String[] themeNames,
+                                         String[] headings,
                                          ArrayList<int[]> themesRanges) {
 
+        Student student = new Student(line[0], line[1]);
+        ArrayList<StudentTheme> studentTheme = getStudentThemes(themes, line, themeNames, headings, themesRanges);
 
-        return new Student(line[0], line[1],
-                getStudentThemes(line, themeNames, headings, fullPoints, themesRanges));
+        student.setStudentThemes(studentTheme);
+        return student;
     }
 
-    private static ArrayList<StudentTheme> getStudentThemes(String[] line, String[] themeNames,
-                                                            String[] headings, String[] fullPoints,
+    private static ArrayList<StudentTheme> getStudentThemes(ArrayList<Theme> themes, String[] line, String[] themeNames,
+                                                            String[] headings,
                                                             ArrayList<int[]> themesRanges) {
+
+
         ArrayList<StudentTheme> studentThemes = new ArrayList<>();
+        int counter = 0;
         for (int[] indexPair : themesRanges) {
-            ArrayList<Task> themeTasks = new ArrayList<>();
             ArrayList<Task> studentTasks = new ArrayList<>();
 
             String themeName = themeNames[indexPair[0]];
             for (int i = indexPair[0]; i < indexPair[1]; i++) {
-                Task themeTask = getTask(themeName, headings[i], fullPoints[i]);
                 Task studentTask = getTask(themeName, headings[i], line[i]);
 
-                if (!Objects.isNull(themeTask))
-                    themeTasks.add(themeTask);
                 if (!Objects.isNull(studentTask))
                     studentTasks.add(studentTask);
             }
-            Theme currentTheme = new Theme(themeName, themeTasks);
+            Theme currentTheme = themes.get(counter);
+            counter++;
             if (currentTheme.getMaxExercise() > 0 || currentTheme.getMaxPractise() > 0)
                 studentThemes.add(new StudentTheme(studentTasks, currentTheme));
-            themeTasks.clear();
+
             studentTasks.clear();
         }
         return studentThemes;

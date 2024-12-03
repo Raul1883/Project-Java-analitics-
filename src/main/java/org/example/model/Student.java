@@ -1,34 +1,36 @@
 package org.example.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
+
 
 /**
  * Класс, описывающий сущность студента, прошедшего курс
  */
+
 public class Student {
     private final String name;
     private final String group;
-    private final ArrayList<StudentTheme> themes;
-
+    private List<StudentTheme> themes;
 
     // изменение величин с течением времени
     private final ArrayList<Float> activitiesDynamics = new ArrayList<>();
     private final ArrayList<Float> exercisesDynamics = new ArrayList<>();
     private final ArrayList<Float> practisesDynamics = new ArrayList<>();
 
-    private ArrayList<Float> relativeActivitiesDynamics;
 
     /**
-     * @param name   ФИО студента
-     * @param themes пройденные темы
-     * @param group  группа
+     * @param name  ФИО студента
+     * @param group группа
      */
-    public Student(String name, String group, ArrayList<StudentTheme> themes) {
+    public Student(String name, String group) {
         this.name = name;
         this.group = group;
-        this.themes = themes;
+    }
 
+
+    public void setStudentThemes(List<StudentTheme> themes) {
+        this.themes = themes;
 
         for (StudentTheme t : themes) {
             activitiesDynamics.add(getRelativeActivityValue(t));
@@ -36,6 +38,7 @@ public class Student {
             practisesDynamics.add(getRelativePractisesValue(t));
         }
     }
+
 
     private static float getRelativeActivityValue(StudentTheme theme) {
         return (float) theme.currentActivity() / theme.theme().getMaxActivity();
@@ -67,16 +70,8 @@ public class Student {
         return practisesDynamics;
     }
 
-    public ArrayList<Float> getRelativeActivitiesDynamics(int maxActivity) {
-        if (Objects.isNull(relativeActivitiesDynamics)) {
-            relativeActivitiesDynamics = new ArrayList<>();
-            for (StudentTheme t : themes)
-                relativeActivitiesDynamics.add(t.getRelativeActivity(maxActivity));
-        }
-        return relativeActivitiesDynamics;
-    }
 
-    public ArrayList<StudentTheme> getThemes() {
+    public List<StudentTheme> getThemes() {
         return themes;
     }
 
@@ -89,6 +84,7 @@ public class Student {
         return name + "{\nex:" +
                 getExercisesDynamics() + "\nact:" +
                 getActivitiesDynamics() + "\npr:" +
-                getPractisesDynamics() + "\n}";
+                getPractisesDynamics() + "\n}" +
+                themes.toString();
     }
 }

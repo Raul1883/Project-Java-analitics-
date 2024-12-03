@@ -38,6 +38,13 @@ public class Theme {
         quality = (float) sumQuality / counter;
     }
 
+    public Theme(String name, int maxPractise, int maxExercise, int maxActivity, float quality) {
+        this.name = name;
+        this.maxPractise = maxPractise;
+        this.maxExercise = maxExercise;
+        this.maxActivity = maxActivity;
+        this.quality = quality;
+    }
 
     public int getMaxPractise() {
         return maxPractise;
