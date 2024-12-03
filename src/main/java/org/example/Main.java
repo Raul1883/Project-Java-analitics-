@@ -21,7 +21,6 @@ public class Main {
         save(path);
         get();
 
-
     }
 
     public static void save(String path) {

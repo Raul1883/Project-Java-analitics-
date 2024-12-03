@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Parser {
+
     public static ArrayList<Task> tasks = new ArrayList<>();
+
 
     public static ArrayList<Theme> readThemes(String path) {
         try (CSVReader reader = new CSVReader(new FileReader(path, StandardCharsets.UTF_8), ';')) {
@@ -115,6 +117,7 @@ public class Parser {
     }
 
     private static Task getTask(String themeName, String heading, String points) {
+
         if (heading.matches("Акт.*")) {
             Activity activity = new Activity(themeName, Integer.parseInt(points));
             tasks.add(activity);
@@ -150,6 +153,7 @@ public class Parser {
             default:
                 return null;
         }
+
     }
 
     // Стартовый индекс задан 2, так как специфика документов.
