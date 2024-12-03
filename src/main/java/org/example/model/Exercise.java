@@ -35,11 +35,6 @@ public class Exercise implements Task {
     }
 
 
-    public String themeName() {
-        return name;
-    }
-
-
     public int points() {
         return _maxPoints;
     }
@@ -47,11 +42,6 @@ public class Exercise implements Task {
 
     public float quality() {
         return _quality;
-    }
-
-
-    public float engagement(int peoplesCount) {
-        return (float) countOfStarted / peoplesCount;
     }
 
 

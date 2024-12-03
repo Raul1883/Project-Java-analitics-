@@ -1,11 +1,16 @@
 package org.example;
 
-import org.example.model.Task;
-import org.example.model.Theme;
+
+import org.example.dataBase.Database;
+import org.example.model.Student;
 import org.example.parser.Parser;
+
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -13,20 +18,33 @@ public class Main {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         String path = "src\\main\\java\\org\\example\\srcfiles\\basicprogramming_2.csv";
 
+        save(path);
+        get();
 
-        for (Theme s : Parser.readThemes(path)) {
+
+    }
+
+    public static void save(String path) {
+        ArrayList<Student> students = Parser.readStudents(path);
+        try (Database db = new Database()) {
+            db.connect();
+            db.saveData(students);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void get() {
+        List<Student> students;
+
+        try (Database db = new Database()) {
+            db.connect();
+            students = db.getData();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Student s : students)
             System.out.println(s);
-        }
-        System.out.println("\n");
-        for (Task t : Parser.tasks) {
-            if (t.quality() > 1)
-                System.out.println("!!!" + t);
-            else{
-                System.out.println(t);
-            }
-        }
-        System.out.println("end");
-
-
     }
 }
