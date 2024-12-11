@@ -6,7 +6,6 @@ package org.example.model;
  */
 public interface Task {
 
-    String themeName();
     /**
      * @return Оценка за задачу
      **/
@@ -17,12 +16,6 @@ public interface Task {
      * @return Качество прохождения задачи или -1, если задача не имеет данных
      */
     float quality();
-
-    /***
-     * Вовлеченность в задачу. Отношение количества приступивших ко всем людям на курсе
-     * @return вовлеченность в задачу или -1, если задача не имеет данных
-     */
-    float engagement(int peoplesCount);
 
 
 }

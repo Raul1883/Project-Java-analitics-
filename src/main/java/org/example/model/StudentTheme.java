@@ -1,18 +1,21 @@
 package org.example.model;
 
+
+
 import java.util.ArrayList;
 
 /**
  * Рекорд, описывающий тему, которую прошел конкретный студент
  */
+
 public final class StudentTheme {
+    private final Theme theme;
     private int currentPractise;
     private int currentExercise;
     private int currentActivity;
-    private final Theme theme;
 
     /**
-     * @param theme   тема, которую прошел студент
+     * @param theme тема, которую прошел студент
      */
     public StudentTheme(
             ArrayList<Task> tasks,
@@ -27,7 +30,15 @@ public final class StudentTheme {
                 currentExercise += t.points();
         }
 
+
         this.theme = theme;
+    }
+
+    public StudentTheme(Theme theme, int currentPractise, int currentExercise, int currentActivity) {
+        this.theme = theme;
+        this.currentPractise = currentPractise;
+        this.currentExercise = currentExercise;
+        this.currentActivity = currentActivity;
     }
 
     public float getRelativeActivity(int maxActivity) {
