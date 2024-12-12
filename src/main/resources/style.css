@@ -1,0 +1,71 @@
+* {
+    -fx-font-family: "Roboto", sans-serif;
+    -fx-base: #8292e0;
+    -fx-text-fill: #333;
+}
+
+.root{
+    -fx-spacing: 15px;
+    -fx-padding: 10px 20px;
+
+}
+
+.main-menu {
+    -fx-spacing: 1px;
+}
+
+.charts-container{
+    -fx-alignment:top-center;
+    -fx-background-color: #c9d0f5;
+    -fx-padding: 5px 3px;
+    -fx-spacing: 15px;
+
+}
+
+
+
+
+Button {
+    -fx-font-size: 16px !important;
+
+    -fx-background-color:
+        linear-gradient(#f2f2f2, #d6d6d6),
+        linear-gradient(#d6d6d6 0%, #e3e3e3 50%, #f2f2f2 100%),
+        linear-gradient(#e3e3e3 0%, #e3e3e3 100%);
+    -fx-background-radius: 6, 5, 4;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: #333;
+    -fx-padding: 10px 20px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian , rgba(0,0,0,0.2) , 5,0,0,1);
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+}
+
+
+Button:hover {
+    -fx-background-color:
+        linear-gradient(#d9d9d9, #b3b3b3),
+        linear-gradient(#b3b3b3 0%,#e3e3e3 50%,#d9d9d9 100%),
+        linear-gradient(#e3e3e3 0%, #e3e3e3 100%);
+}
+
+
+Button:pressed {
+    -fx-background-color: #a9a9a9;
+}
+
+.chart {
+    -fx-padding: 20px;
+    -fx-background-color: white;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.charts-button{
+    -fx-font-size: 12px !important;
+}
+

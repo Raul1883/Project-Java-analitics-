@@ -1,10 +1,11 @@
 package org.example;
 
 
+
 import org.example.dataBase.Database;
 import org.example.model.Student;
 import org.example.parser.Parser;
-
+import org.example.viev.MainApplication;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -13,14 +14,12 @@ import java.util.List;
 
 
 public class Main {
+
     public static void main(String[] args) {
-
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-        String path = "src\\main\\java\\org\\example\\srcfiles\\basicprogramming_2.csv";
 
-        save(path);
-        get();
-
+        MainApplication app = new MainApplication();
+        //save(path);
     }
 
     public static void save(String path) {
@@ -33,7 +32,7 @@ public class Main {
         }
     }
 
-    public static void get() {
+    public static List<Student> get() {
         List<Student> students;
 
         try (Database db = new Database()) {
@@ -43,7 +42,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        for (Student s : students)
-            System.out.println(s);
+        return students;
     }
 }

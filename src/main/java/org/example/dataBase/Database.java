@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import javafx.scene.control.Tab;
 import org.example.model.Student;
 import org.example.model.StudentTheme;
 import org.example.model.Theme;
@@ -13,6 +14,9 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Класс для работы с базой данных с использованием ORM-библиотеки ORMLite.
@@ -84,6 +88,16 @@ public class Database implements AutoCloseable {
      * @param students Список студентов, полученных из парсера данных
      */
     public void saveData(List<Student> students) {
+        if (Objects.isNull(connectionSource))
+            throw new IllegalStateException("Connection is null");
+
+        try {
+            TableUtils.clearTable(connectionSource, StudentThemeData.class);
+            TableUtils.clearTable(connectionSource, StudentData.class);
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка перезаписи");
+        }
+
         // Преобразуем студентов в StudentData для записи в таблицу студентов
         List<StudentData> studentDataList = students.stream()
                 .map(StudentData::new)
@@ -103,6 +117,19 @@ public class Database implements AutoCloseable {
         writeDao(studentThemesDao, studentThemeData);
     }
 
+    public void saveDataAsync(List<Student> students) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            try {
+                saveData(students);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        executor.shutdown();
+    }
+
+
     /**
      * Извлекает данные о студентах и их темах из базы данных.
      * Этот метод сначала загружает все записи о студентах, затем для каждого студента извлекаются связанные темы
@@ -112,6 +139,9 @@ public class Database implements AutoCloseable {
      * @throws SQLException В случае ошибки при запросе данных из базы данных
      */
     public List<Student> getData() throws SQLException {
+        if (Objects.isNull(connectionSource))
+            throw new IllegalStateException("Connection is null");
+
         List<Student> students = new LinkedList<>();
 
         // Извлекаем данные студентов
@@ -140,6 +170,7 @@ public class Database implements AutoCloseable {
             student.setStudentThemes(studentThemes);
             students.add(student);  // Добавляем студента в список
         }
+
 
         return students;
     }

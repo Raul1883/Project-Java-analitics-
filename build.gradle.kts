@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "org.example"
@@ -19,8 +20,10 @@ dependencies {
     implementation("com.j256.ormlite:ormlite-jdbc:5.1")
     implementation("org.xerial:sqlite-jdbc:3.41.2.2")
 
+}
 
-
+javafx {
+    modules("javafx.controls", "javafx.fxml")
 }
 
 tasks.test {

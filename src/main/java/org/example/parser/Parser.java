@@ -15,7 +15,7 @@ public class Parser {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
 
-    public static ArrayList<Theme> readThemes(String path) {
+    private static ArrayList<Theme> readThemes(String path) {
         try (CSVReader reader = new CSVReader(new FileReader(path, StandardCharsets.UTF_8), ';')) {
             ArrayList<Theme> themes = new ArrayList<>();
 
