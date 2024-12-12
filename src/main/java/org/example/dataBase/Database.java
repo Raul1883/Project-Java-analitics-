@@ -5,7 +5,6 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import javafx.scene.control.Tab;
 import org.example.model.Student;
 import org.example.model.StudentTheme;
 import org.example.model.Theme;

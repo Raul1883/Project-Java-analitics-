@@ -58,9 +58,7 @@ public class DataProcessor {
 
     private List<DataPair> getQuality() {
         HashMap<String, Number> pointsMap = new LinkedHashMap<>();
-        students.get(0).getThemes().stream().map(StudentTheme::theme).forEach(theme -> {
-            pointsMap.put(theme.getName(), theme.getQuality());
-        });
+        students.get(0).getThemes().stream().map(StudentTheme::theme).forEach(theme -> pointsMap.put(theme.getName(), theme.getQuality()));
 
         return DataPair.fromMap(pointsMap);
     }
@@ -76,8 +74,6 @@ public class DataProcessor {
     }
 
     private List<DataPair> getDataForCategory(Category category) {
-        int maxPoints = students.get(0).getThemes().stream().map(StudentTheme::theme).mapToInt(x -> x.getMaxActivity() + x.getMaxExercise() + x.getMaxPractise()).sum();
-
         HashMap<String, Integer> pointsMap = new LinkedHashMap<>();
         students.get(0).getThemes().stream().map(StudentTheme::theme).forEach(x -> pointsMap.put(x.getName(), 0));
 
