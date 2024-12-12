@@ -15,35 +15,6 @@ public class Parser {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
 
-    public static ArrayList<Theme> readThemes(String path) {
-        try (CSVReader reader = new CSVReader(new FileReader(path, StandardCharsets.UTF_8), ';')) {
-            ArrayList<Theme> themes = new ArrayList<>();
-
-            String[] themeNames = reader.readNext();
-            String[] headings = reader.readNext();
-            String[] fullPoints = reader.readNext();
-
-            ArrayList<int[]> themesRanges = getThemesIndex(themeNames);
-            for (int[] indexPair : themesRanges) {
-                ArrayList<Task> themeTasks = new ArrayList<>();
-
-                String themeName = themeNames[indexPair[0]];
-                for (int i = indexPair[0]; i < indexPair[1]; i++) {
-                    Task themeTask = getTask(themeName, headings[i], fullPoints[i]);
-                    if (!Objects.isNull(themeTask))
-                        themeTasks.add(themeTask);
-
-                }
-                themes.add(new Theme(themeName, themeTasks));
-                themeTasks.clear();
-            }
-            return themes;
-        } catch (IOException e) {
-            throw new RuntimeException("Ошибка чтения из файла");
-        }
-    }
-
-
     public static ArrayList<Student> readStudents(String path) {
         try (CSVReader reader = new CSVReader(new FileReader(path, StandardCharsets.UTF_8), ';')) {
 

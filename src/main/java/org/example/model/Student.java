@@ -1,7 +1,8 @@
 package org.example.model;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -12,12 +13,7 @@ public class Student {
     private final String name;
     private final String group;
     private List<StudentTheme> themes;
-
-    // изменение величин с течением времени
-    private final ArrayList<Float> activitiesDynamics = new ArrayList<>();
-    private final ArrayList<Float> exercisesDynamics = new ArrayList<>();
-    private final ArrayList<Float> practisesDynamics = new ArrayList<>();
-
+    private Integer summaryPoints;
 
     /**
      * @param name  ФИО студента
@@ -31,25 +27,11 @@ public class Student {
 
     public void setStudentThemes(List<StudentTheme> themes) {
         this.themes = themes;
-
-        for (StudentTheme t : themes) {
-            activitiesDynamics.add(getRelativeActivityValue(t));
-            exercisesDynamics.add(getRelativeExercisesValue(t));
-            practisesDynamics.add(getRelativePractisesValue(t));
-        }
-    }
-
-
-    private static float getRelativeActivityValue(StudentTheme theme) {
-        return (float) theme.currentActivity() / theme.theme().getMaxActivity();
-    }
-
-    private static float getRelativeExercisesValue(StudentTheme theme) {
-        return (float) theme.currentExercise() / theme.theme().getMaxExercise();
-    }
-
-    private static float getRelativePractisesValue(StudentTheme theme) {
-        return (float) theme.currentPractise() / theme.theme().getMaxPractise();
+        summaryPoints = themes.stream()
+                .mapToInt(x ->
+                        x.currentExercise() + x.currentActivity() + x.currentPractise()
+                )
+                .sum();
     }
 
 
@@ -58,33 +40,29 @@ public class Student {
     }
 
 
-    public ArrayList<Float> getActivitiesDynamics() {
-        return activitiesDynamics;
+    public String getGroup() {
+        return group;
     }
-
-    public ArrayList<Float> getExercisesDynamics() {
-        return exercisesDynamics;
-    }
-
-    public ArrayList<Float> getPractisesDynamics() {
-        return practisesDynamics;
-    }
-
 
     public List<StudentTheme> getThemes() {
+        if (Objects.isNull(themes))
+            throw new IllegalStateException("Full statistics was not initialized");
+
         return themes;
     }
 
-    public String getGroup() {
-        return group;
+    public int getSummaryPoints() {
+        if (Objects.isNull(summaryPoints))
+            throw new IllegalStateException("Full statistics was not initialized");
+
+        return summaryPoints;
     }
 
     @Override
     public String toString() {
         return name + "{\nex:" +
-                getExercisesDynamics() + "\nact:" +
-                getActivitiesDynamics() + "\npr:" +
-                getPractisesDynamics() + "\n}" +
                 themes.toString();
     }
+
+
 }
